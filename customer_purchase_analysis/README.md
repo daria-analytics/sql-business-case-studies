@@ -1,166 +1,114 @@
-/*
-===============================================================================
-Project: Customer Purchase Analysis
-Domain: Online Cinema
-Database: skycinema
+# Customer Purchase Analysis
 
-Description:
-This project analyzes customer purchase behavior using SQL window functions.
-The analysis focuses on customer acquisition, first purchases,
-and repeat purchase behavior across acquisition partners.
-===============================================================================
-*/
+## Project Overview
+
+This SQL project analyzes customer purchase behavior in an online cinema service.
+
+The objective is to understand how users make their first and repeat purchases, evaluate acquisition partners, and analyze the time between consecutive purchases.
+
+The analysis is based on transactional subscription data using SQL window functions, joins, CTEs, and aggregation.
+
+---
+
+## Business Tasks
+
+The project focuses on three analytical tasks:
+
+1. Build an analytical dataset that identifies the sequence of customer purchases.
+2. Analyze which acquisition partners generate the largest number of first-time customers.
+3. Measure how quickly customers return for a second purchase across different acquisition channels.
+
+---
+
+## Dataset
+
+Tables used:
+
+- `client_sign_up` — subscription purchase history
+- `partner_dict` — acquisition partner dictionary
+
+---
+
+## SQL Techniques
+
+- Common Table Expressions (CTE)
+- LEFT JOIN
+- Window Functions
+  - ROW_NUMBER()
+  - LAG()
+- Aggregate Functions
+- Date Arithmetic
+- CASE WHEN
+- GROUP BY
+- ORDER BY
+
+---
+
+## Project Workflow
+
+### Step 1. Customer Purchase Ranking
+
+Created a reusable analytical dataset by ranking customer purchases chronologically.
+This dataset serves as the foundation for identifying first and repeat purchases.
+
+- Joined purchase data with the partner dictionary.
+- Assigned each purchase its sequence number within the customer's history.
+- Built a reusable analytical dataset for further analysis.
+
+### Step 2. First Purchase Analysis
+
+Filtered only first purchases to evaluate customer acquisition.
+Compared acquisition partners and subscription types to identify the channels that bring the highest number of new customers.
+
+- Filtered only first purchases.
+- Compared acquisition partners.
+- Analyzed paid vs. trial subscriptions.
+- Ranked partners by the number of new customers.
+
+### Step 3. Customer Return Analysis
+
+Calculated the average time between the first and second purchase using window functions.
+Compared customer return speed across acquisition partners to evaluate engagement quality.
+
+- Retrieved the previous purchase date using `LAG()`.
+- Selected only second purchases.
+- Calculated the average time between the first and second purchase.
+- Compared customer return speed across partners.
+
+---
+
+## Skills Demonstrated
+
+- SQL
+- PostgreSQL
+- Window Functions
+- Common Table Expressions (CTEs)
+- Customer Analytics
+- Product Analytics
+- Cohort & Retention Analysis
+- Business Analysis
+
+---
+
+## Repository Structure
+
+customer_purchase_analysis/
+│
+├── README.md
+└── skycinema_customer_purchase_analysis.sql
+
+---
+
+## Key Takeaways
+
+This project demonstrates how SQL window functions can be used to transform raw transactional data into business insights.
+
+The resulting analytical dataset allows analysts to identify customer acquisition patterns, distinguish first-time and repeat customers, and evaluate partner performance based on customer retention.
+
+---
 
 
--- ============================================================================
--- STEP 1
--- Build an analytical dataset with purchase sequence numbers.
---
--- Business goal:
--- Identify the order of purchases for each customer.
--- This dataset will be reused in the following analyses.
--- ============================================================================
+## Author
 
-
-with purchase_history as (
-
-    select
-        csu.purchase_id,
-        csu.user_id,
-        csu.partner,
-        pd.name_partner,
-        csu.date_purchase,
-        csu.amt_payment,
-        csu.is_trial,
-
-        row_number() over (
-            partition by csu.user_id
-            order by csu.date_purchase, csu.purchase_id
-        ) as customer_purchase_number
-
-    from skycinema.client_sign_up csu
-
-    left join skycinema.partner_dict pd
-        on csu.partner = pd.id_partner
-)
-
-select *
-
-from purchase_history
-
-
--- ============================================================================
--- STEP 2
--- Analyze first customer purchases.
---
--- Business goal:
--- Compare acquisition partners by the number of new customers
--- and evaluate trial vs. paid subscriptions.
--- ============================================================================
-
-WITH purchase_history AS (
-
-    SELECT
-        csu.purchase_id,
-        csu.user_id,
-        csu.partner,
-        pd.name_partner,
-        csu.date_purchase,
-        csu.amt_payment,
-        csu.is_trial,
-
-        ROW_NUMBER() OVER (
-            PARTITION BY csu.user_id
-            ORDER BY
-                csu.date_purchase,
-                csu.purchase_id
-        ) AS customer_purchase_number
-
-    FROM skycinema.client_sign_up AS csu
-
-    LEFT JOIN skycinema.partner_dict AS pd
-        ON csu.partner = pd.id_partner
-
-)
-
-SELECT
-    name_partner,
-    is_trial,
-    COUNT(*) AS first_purchase_count
-
-FROM purchase_history
-
-WHERE customer_purchase_number = 1
-
-GROUP BY
-    name_partner,
-    is_trial
-
-ORDER BY
-    first_purchase_count DESC
-
-
-/*
-Insight
-
-Only first purchases are included in the analysis because the goal
-is to evaluate customer acquisition rather than overall purchasing
-activity. Restricting the dataset to each customer's first purchase
-ensures that every customer is counted only once.
-*/
-
--- ============================================================================
--- STEP 3
--- Analyze customer return behavior.
---
--- Business goal:
--- Calculate the average time between the first and second purchase
--- for each acquisition partner.
--- ============================================================================
-
-WITH purchase_history AS (
-
-    SELECT
-        csu.purchase_id,
-        csu.user_id,
-        csu.partner,
-        pd.name_partner,
-        csu.date_purchase,
-        csu.amt_payment,
-        csu.is_trial,
-
-        ROW_NUMBER() OVER (
-            PARTITION BY csu.user_id
-            ORDER BY
-                csu.date_purchase,
-                csu.purchase_id
-        ) AS customer_purchase_number,
-
-        LAG(csu.date_purchase) OVER (
-            PARTITION BY csu.user_id
-            ORDER BY
-                csu.date_purchase,
-                csu.purchase_id
-        ) AS previous_purchase_date
-
-    FROM skycinema.client_sign_up AS csu
-
-    LEFT JOIN skycinema.partner_dict AS pd
-        ON csu.partner = pd.id_partner
-
-)
-
-SELECT
-    name_partner,
-    AVG(date_purchase - previous_purchase_date)
-        AS average_time_to_second_purchase
-
-FROM purchase_history
-
-WHERE customer_purchase_number = 2
-
-GROUP BY
-    name_partner
-
-ORDER BY
-    average_time_to_second_purchase
+**Daria Sinitsyna**  
+Junior Data Analyst
