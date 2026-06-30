@@ -1,0 +1,92 @@
+# Customer Purchase Analysis
+
+## Project Overview
+
+This SQL project analyzes customer purchase behavior in an online cinema service.
+
+The objective is to understand how users make their first and repeat purchases, evaluate acquisition partners, and analyze the time between consecutive purchases.
+
+The analysis is based on transactional subscription data using SQL window functions, joins, CTEs, and aggregation.
+
+---
+
+## Business Questions
+
+The project answers three business questions:
+
+1. How can customer purchases be ranked chronologically to distinguish first and repeat purchases?
+2. Which acquisition partners bring the largest number of new customers?
+3. Which partners attract customers who return for a second purchase the fastest?
+
+---
+
+## Dataset
+
+Tables used:
+
+- `client_sign_up` — subscription purchase history
+- `partner_dict` — acquisition partner dictionary
+
+---
+
+## SQL Techniques
+
+- Common Table Expressions (CTE)
+- LEFT JOIN
+- Window Functions
+  - ROW_NUMBER()
+  - LAG()
+- Aggregate Functions
+- CASE WHEN
+- GROUP BY
+- ORDER BY
+
+---
+
+## Project Workflow
+
+### Step 1. Customer Purchase Ranking
+
+- Joined purchase data with the partner dictionary.
+- Assigned each purchase its sequence number within the customer's history.
+- Built a reusable analytical dataset for further analysis.
+
+### Step 2. First Purchase Analysis
+
+- Filtered only first purchases.
+- Compared acquisition partners.
+- Analyzed paid vs. trial subscriptions.
+- Ranked partners by the number of new customers.
+
+### Step 3. Customer Return Analysis
+
+- Retrieved the previous purchase date using `LAG()`.
+- Selected only second purchases.
+- Calculated the average time between the first and second purchase.
+- Compared customer return speed across partners.
+
+---
+
+## Skills Demonstrated
+
+- SQL
+- PostgreSQL
+- Window Functions
+- Customer Analytics
+- Product Analytics
+- Business Analysis
+- Data Aggregation
+- CTE Design
+
+---
+
+## Repository Files
+
+- `skycinema_customer_purchase_analysis.sql`
+
+---
+
+## Author
+
+**Daria Sinitsyna**  
+Junior Data Analyst
