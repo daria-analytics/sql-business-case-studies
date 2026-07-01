@@ -118,9 +118,3 @@ monthly_business_metrics_analysis/
 **Daria Sinitsyna**
 
 Junior Data Analyst
-
-## Author
-
-**Daria Sinitsyna**
-
-Junior Data Analyst
