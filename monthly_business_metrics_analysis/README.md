@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-This SQL project analyzes monthly business performance in an online education platform.
+This SQL project analyzes monthly business performance for an online education platform.
 
-The objective is to validate the hypothesis that the decline in revenue during 2017 was associated with a decrease in both the number of completed lessons and the number of active students.
+The objective is to validate the hypothesis that the decline in revenue during 2017 was associated with a decrease in both lesson activity and the number of active students.
 
 The analysis combines payment and lesson data into a single monthly analytical dataset.
 
@@ -14,12 +14,12 @@ The analysis combines payment and lesson data into a single monthly analytical d
 
 Validate the following business hypothesis:
 
-> During 2017, the decrease in revenue was caused by a reduction in:
+> During 2017, the decline in revenue was caused by a reduction in:
 >
 > - the total number of successful lessons;
 > - the total number of active students.
 
-To test the hypothesis, monthly revenue, lesson activity, and student activity are compared throughout 2017.
+The project compares monthly revenue, lesson activity, and student activity throughout 2017.
 
 ---
 
@@ -34,7 +34,7 @@ Tables used:
 
 ## SQL Techniques
 
-- Common Table Expressions (CTEs)
+- Nested Subqueries
 - Aggregate Functions
 - FULL JOIN
 - COUNT(DISTINCT)
@@ -46,27 +46,45 @@ Tables used:
 
 ## Project Workflow
 
-### Step 1. Monthly Revenue
+### Monthly Revenue Aggregation
 
-Calculated monthly revenue using successful payment transactions.
+Calculated total monthly revenue using successful payment transactions.
 
 - Filtered successful payments.
-- Aggregated payment amounts by month.
+- Aggregated revenue by month.
 
-### Step 2. Monthly Learning Activity
+### Monthly Lesson Activity
 
-Calculated lesson activity for each month.
+Calculated operational metrics for each month.
 
 - Filtered successful lessons.
 - Counted completed lessons.
 - Counted active students.
 
-### Step 3. Business Metrics Dashboard
+### Business Metrics Integration
 
-Combined revenue and learning activity into a unified monthly dataset.
+Combined both aggregated datasets into a unified monthly analytical table.
 
-- Joined monthly payment and lesson statistics.
+- Joined payment and lesson statistics.
 - Prepared the dataset for business hypothesis validation.
+
+---
+
+## Results
+
+The query produced the following monthly business metrics for 2017.
+
+![Monthly Business Metrics](results.png)
+
+---
+
+## Business Conclusion
+
+The analysis shows that revenue generally declined during 2017.
+
+The decrease in revenue was accompanied by a reduction in both the number of successful lessons and the number of active students.
+
+Although several months showed temporary increases, the overall downward trend supports the business hypothesis that lower operational activity contributed to the decline in revenue.
 
 ---
 
@@ -74,32 +92,32 @@ Combined revenue and learning activity into a unified monthly dataset.
 
 - SQL
 - PostgreSQL
-- Data Aggregation
-- CTE Design
-- Business Metrics
-- Customer Activity Analysis
+- Nested Subqueries
+- Aggregate Functions
+- Business Metrics Analysis
 - Time Series Aggregation
-- Analytical Data Modeling
+- Data Aggregation
+- Business Analysis
 
 ---
 
 ## Repository Structure
 
+```
 monthly_business_metrics_analysis/
-
+│
 ├── README.md
-
-└── monthly_business_metrics_analysis.sql
-
----
-
-## Key Takeaways
-
-This project demonstrates how to build an analytical dataset by combining multiple business metrics with different levels of granularity.
-
-The resulting monthly dashboard enables analysts to evaluate business performance trends and validate revenue-related hypotheses using operational data.
+├── monthly_business_metrics_analysis.sql
+└── results.png
+```
 
 ---
+
+## Author
+
+**Daria Sinitsyna**
+
+Junior Data Analyst
 
 ## Author
 
