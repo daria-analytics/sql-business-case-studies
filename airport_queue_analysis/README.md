@@ -52,7 +52,7 @@ Compared the number of successful and unsuccessful departures for this driver se
 
 **Result**
 
-![Task 1 Result](images/task1_result.png)
+![Task 1 Result](task1_result.png)
 
 ---
 
@@ -70,7 +70,7 @@ The analysis included only:
 
 **Result**
 
-![Task 2 Result](images/task2_result.png)
+![Task 2 Result](task2_result.png)
 
 ---
 
@@ -82,7 +82,7 @@ The resulting analysis helps identify the hours that provide the best balance be
 
 **Result**
 
-![Task 3 Result](images/task3_result.png)
+![Task 3 Result](task3_result.png)
 
 The highest probability of receiving an order is observed during the morning hours, while average waiting time remains relatively low, making these periods the most efficient for airport arrivals.
 ---
