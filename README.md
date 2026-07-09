@@ -1,4 +1,4 @@
-# SQL Business Case Studies
+# SQL Projects
 
 This repository contains a collection of SQL projects based on real-world business scenarios.
 
